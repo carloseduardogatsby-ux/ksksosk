@@ -1,0 +1,6 @@
+{
+  "appId": "com.carlos.gabaritodeck.pdf",
+  "appName": "Gabarito Deck PDF",
+  "webDir": "www",
+  "server": { "androidScheme": "https" }
+}
