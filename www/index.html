@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<title>Gabarito Deck PDF</title>
+<style>
+:root{--bg:#f6f8fc;--card:#fff;--text:#0f172a;--muted:#64748b;--line:#e2e8f0;--blue:#2563eb;--blue-soft:#dbeafe;--green:#16a34a;--green-soft:#dcfce7;--red:#dc2626;--red-soft:#fee2e2;--yellow:#f59e0b;--yellow-soft:#fef3c7;--shadow:0 18px 55px rgba(15,23,42,.10);--radius:26px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}
+body{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(circle at top,#fff 0%,var(--bg) 52%,#eef2f7 100%);color:var(--text)}
+button,textarea,input{font:inherit}button{cursor:pointer}
+.wrap{width:min(980px,100%);margin:0 auto;padding:14px;padding-top:max(14px,env(safe-area-inset-top));display:flex;flex-direction:column;gap:14px}
+h1{margin:0;font-size:clamp(1.4rem,3.4vw,2.3rem);letter-spacing:-.05em;font-weight:950}
+.sub{margin:4px 0 0;color:var(--muted);font-size:.92rem;font-weight:650}
+.top{display:flex;align-items:center;gap:10px;justify-content:space-between}
+.card{background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:clamp(14px,3vw,26px)}
+.stack{display:flex;flex-direction:column;gap:12px}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.grow{flex:1}
+.tiny{font-size:.78rem;color:var(--muted)}
+.btn{border:0;border-radius:18px;min-height:50px;padding:12px 18px;background:#f1f5f9;color:var(--text);font-weight:900;display:inline-flex;align-items:center;justify-content:center;text-align:center}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--blue);color:#fff;box-shadow:0 14px 30px rgba(37,99,235,.22)}
+.btn-dark{background:var(--text);color:#fff}
+.btn-outline{background:transparent;border:1px solid var(--line)}
+.btn-danger{background:var(--red-soft);color:#991b1b}
+.ib{width:44px;height:44px;border-radius:14px;border:1px solid var(--line);background:#fff;font-size:1.2rem;font-weight:900}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.exam{border:1px solid var(--line);border-radius:22px;background:#fff;padding:12px;display:flex;flex-direction:column;gap:10px}
+.exam .th{display:flex;gap:12px}
+.exam img,.exam .noimg{width:78px;height:104px;border-radius:10px;object-fit:cover;border:1px solid var(--line);background:#f1f5f9;flex:none;display:grid;place-items:center;font-size:.7rem;color:var(--muted)}
+.en{font-weight:950;letter-spacing:-.03em;word-break:break-word}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.chip{padding:5px 9px;border-radius:999px;background:#f1f5f9;color:#334155;font-size:.76rem;font-weight:850}
+.cg{background:var(--green-soft);color:#166534}.cr{background:var(--red-soft);color:#991b1b}.cy{background:var(--yellow-soft);color:#92400e}.cb{background:var(--blue-soft);color:#1e40af}
+.empty{padding:26px;text-align:center;color:var(--muted);font-weight:700}
+textarea{width:100%;min-height:150px;border:1px solid var(--line);border-radius:18px;padding:14px;background:#fff;resize:vertical;font-family:ui-monospace,monospace;font-size:.9rem}
+.ex{background:#f8fafc;border:1px dashed #cbd5e1;border-radius:14px;padding:10px 12px;font-family:ui-monospace,monospace;font-size:.82rem;word-break:break-all}
+/* leitor */
+.rd{position:fixed;inset:0;display:flex;flex-direction:column;background:#cbd5e1}
+.rhead{display:flex;align-items:center;gap:8px;padding:6px 10px;padding-top:max(6px,env(safe-area-inset-top));background:#fff;border-bottom:1px solid var(--line)}
+.rt{flex:1;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#sc{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;padding-right:72px}
+#pages{display:flex;flex-direction:column;align-items:center;min-width:100%;width:max-content;padding:8px 0}
+.pg{position:relative;background:#fff;margin-bottom:10px;box-shadow:0 2px 8px rgba(15,23,42,.35)}
+.pg canvas{position:absolute;left:0;top:0}
+.mag .pg{background:#f4c7e1}.mag .pc{mix-blend-mode:multiply}
+.ov{touch-action:auto}.draw .ov{touch-action:none}
+.bar{position:fixed;right:max(8px,env(safe-area-inset-right));top:calc(50% + 24px);transform:translateY(-50%);max-height:calc(100% - 90px);overflow-y:auto;scrollbar-width:none;background:#0b0f19;border-radius:28px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:7px;z-index:10;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.bar::-webkit-scrollbar{display:none}
+.tb{width:42px;height:42px;border-radius:50%;border:2px solid transparent;background:var(--c,#334155);color:#fff;font-size:1.05rem;font-weight:900;flex:none;display:grid;place-items:center;padding:0}
+.tb.on{border-color:#fff;box-shadow:0 0 0 2px var(--blue)}
+.al{width:42px;height:34px;border-radius:8px;border:2px solid transparent;background:#0891b2;color:#fff;font-size:1.1rem;font-weight:900;flex:none;padding:0}
+.al.sel{background:#fff;color:#0f172a}.al.ok{background:var(--green);color:#fff}.al.no{background:var(--red);color:#fff}.al.hint{border-color:#4ade80}
+.qn{color:#fff;font-size:1.5rem;font-weight:950;background:none;border:0;min-width:42px;padding:0}
+.qn.nula{color:#60a5fa}
+.ar{color:#94a3b8;background:none;border:0;font-size:1rem;padding:0;height:24px;width:42px}
+.star{background:none;border:0;font-size:1.6rem;color:#64748b;padding:0;height:34px}.star.on{color:#fbbf24}
+.sp{width:28px;height:1px;background:#334155;flex:none}
+.pop{position:fixed;right:76px;z-index:20;background:#0b0f19;color:#fff;border-radius:18px;padding:12px;display:flex;flex-wrap:wrap;gap:8px;max-width:220px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.sw{width:34px;height:34px;border-radius:50%;border:2px solid #475569;padding:0}.sw.on{border-color:#fff}
+.pop input[type=range]{width:180px}
+.sheet{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:30;display:grid;place-items:center;padding:14px}
+.sheet .card{max-height:88vh;overflow:auto;width:min(560px,100%)}
+/* resultado */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.stat{border:1px solid var(--line);border-radius:20px;padding:14px;background:#fff}
+.sv{font-size:clamp(1.5rem,5vw,2.6rem);line-height:1;font-weight:1000;letter-spacing:-.07em}
+.sl{margin-top:6px;color:var(--muted);font-size:.82rem;font-weight:850}
+.perf{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.donut{width:132px;height:132px;border-radius:50%;display:grid;place-items:center;flex:none}
+.donut div{width:92px;height:92px;border-radius:50%;background:#fff;display:grid;place-items:center;text-align:center;font-weight:950;font-size:1.3rem;line-height:1}
+.donut small{display:block;font-size:.6rem;color:var(--muted);font-weight:700}
+.lg{display:flex;flex-direction:column;gap:6px;font-size:.88rem;font-weight:750}
+.dt{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:7px}
+.br{display:grid;grid-template-columns:60px 1fr 44px;gap:10px;align-items:center;font-size:.82rem;font-weight:800;margin-top:8px}
+.bt{height:9px;border-radius:9px;background:#e2e8f0;overflow:hidden}.bf{height:100%;background:var(--yellow)}
+.tabs{display:flex;gap:8px;overflow-x:auto}
+.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 14px;font-weight:950;color:#475569;white-space:nowrap}
+.tab.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.mx{display:grid;grid-template-columns:70px 1fr;gap:10px;align-items:center;margin-top:10px}
+.ml{text-align:right;color:var(--muted);font-weight:900;font-size:.88rem}
+.qg{display:grid;grid-template-columns:repeat(15,minmax(30px,1fr));gap:6px}
+.t{position:relative;border:0;border-radius:10px;min-height:38px;font-weight:900;font-size:.85rem;background:#f1f5f9;color:#64748b}
+.t-ok{background:var(--green-soft);color:#166534}.t-no{background:var(--red-soft);color:#991b1b}.t-nula{background:var(--blue-soft);color:#1e40af}
+.t i{position:absolute;top:1px;right:3px;font-style:normal;font-size:.7rem;color:var(--yellow)}
+@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}.mx{grid-template-columns:1fr}.ml{text-align:left}.qg{grid-template-columns:repeat(5,1fr)}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="lib/pdf.min.js"></script>
+<script>
+const app=document.getElementById('app'),$=s=>document.querySelector(s);
+const esc=t=>String(t??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid=()=>'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const nav=h=>{location.hash=h};
+pdfjsLib.GlobalWorkerOptions.workerSrc='lib/pdf.worker.min.js';
+
+/* ---------- armazenamento (IndexedDB) ---------- */
+const dbp=new Promise((ok,er)=>{const r=indexedDB.open('gabarito-deck',1);r.onupgradeneeded=()=>{r.result.createObjectStore('kv');r.result.createObjectStore('pdfs')};r.onsuccess=()=>ok(r.result);r.onerror=()=>er(r.error)});
+const tx=async(st,m,fn)=>{const db=await dbp;return new Promise((ok,er)=>{const t=db.transaction(st,m);const q=fn(t.objectStore(st));t.oncomplete=()=>ok(q.result);t.onerror=()=>er(t.error)})};
+const kvGet=k=>tx('kv','readonly',s=>s.get(k)),kvSet=(k,v)=>tx('kv','readwrite',s=>s.put(v,k));
+const pdfGet=k=>tx('pdfs','readonly',s=>s.get(k)),pdfSet=(k,v)=>tx('pdfs','readwrite',s=>s.put(v,k)),pdfDel=k=>tx('pdfs','readwrite',s=>s.delete(k));
+
+/* ---------- dados ---------- */
+let provas=[],R=null,filtro='todas';
+const getP=id=>provas.find(p=>p.id===id);
+const save=()=>kvSet('provas',provas);
+function migrate(o){
+  const g={},r={},v={},conf=o.confirmadas;
+  Object.entries(o.gabarito||{}).forEach(([k,x])=>g[k]=String(x).toUpperCase());
+  Object.entries(o.respostas||{}).forEach(([k,x])=>{if(conf===undefined||conf[k])r[k]=String(x).toUpperCase()});
+  Object.entries(o.marcadasRevisao||{}).forEach(([k,x])=>{if(x)v[k]=1});
+  return{id:o.id||uid(),nome:o.nome||'Prova',total:+o.totalQuestoes||Object.keys(g).length,alts:o.alternativas||['A','B','C','D','E'],gab:g,resp:r,rev:v,criado:o.criadoEm||new Date().toISOString()};
+}
+function status(p,n){const g=p.gab[n];if(g==='*')return'nula';const r=p.resp[n];if(!g||!r)return'pend';return r===g?'ok':'no'}
+function compute(p){
+  const c={ok:[],no:[],nula:[],pend:[],rev:[]};
+  for(let i=1;i<=p.total;i++){c[status(p,i)].push(i);if(p.rev[i])c.rev.push(i)}
+  c.pct=p.total?Math.round((c.ok.length+c.nula.length)/p.total*100):0;
+  return c;
+}
+function exportCode(p){return`PROVA|${p.nome}|${p.total}|`+Array.from({length:p.total},(_,i)=>p.gab[i+1]||'?').join('')}
+function parseCodigo(txt){
+  const raw=String(txt||'').trim();
+  if(!raw)throw new Error('Cole o gabarito antes de carregar.');
+  const ok=s=>s.toUpperCase().replace(/[^A-Z*]/g,'');
+  if(raw.toUpperCase().startsWith('PROVA|')){
+    const a=raw.split('|').map(x=>x.trim());
+    if(a.length<4)throw new Error('Formato: PROVA|NOME|TOTAL|GABARITO');
+    const total=Number(a[2]);
+    if(!Number.isInteger(total)||total<1)throw new Error('O total precisa ser um número.');
+    if(total>60)throw new Error('O limite é 60 questões.');
+    let alts=['A','B','C','D','E'],seq=a[3];
+    if(a.length>=5&&a[3].includes(',')){alts=a[3].split(',').map(x=>x.trim().toUpperCase()).filter(Boolean);seq=a[4]}
+    seq=ok(seq);
+    if(seq.length!==total)throw new Error(`O gabarito tem ${seq.length} caracteres, mas o total é ${total}.`);
+    const gab={};[...seq].forEach((l,i)=>gab[i+1]=l);
+    return{nome:a[1]||'Prova',total,alts,gab};
+  }
+  let nome='Prova',total=0,alts=['A','B','C','D','E'];const gab={};
+  raw.split(/\r?\n/).map(l=>l.trim()).filter(Boolean).forEach(l=>{
+    if(l.includes(':')){const i=l.indexOf(':'),k=l.slice(0,i).trim().toUpperCase(),v=l.slice(i+1).trim();
+      if(k==='NOME')nome=v||nome;else if(['QUESTOES','QUESTÕES','TOTAL'].includes(k))total=Number(v);
+      else if(k==='ALTERNATIVAS')alts=v.split(',').map(x=>x.trim().toUpperCase()).filter(Boolean);
+      else if(k==='GABARITO')[...ok(v)].forEach((x,j)=>gab[j+1]=x);return}
+    const m=l.match(/^(\d{1,2})\s*[-.) ]\s*([A-Za-z*])$/);
+    if(m){const n=+m[1];gab[n]=m[2].toUpperCase();if(n>total)total=n}
+  });
+  if(!total)total=Object.keys(gab).length;
+  if(total<1)throw new Error('Não consegui identificar as questões.');
+  if(total>60)throw new Error('O limite é 60 questões.');
+  if(Object.keys(gab).length!==total)throw new Error(`Foram encontradas ${Object.keys(gab).length} respostas para ${total} questões.`);
+  return{nome,total,alts,gab};
+}
+
+/* ---------- roteador ---------- */
+function route(){
+  closeReader();
+  const[,r,id]=location.hash.split('/');
+  if(r==='gab')gabScreen(id);else if(r==='ler')reader(id);else if(r==='res')result(id);else library();
+}
+addEventListener('hashchange',route);
+
+/* ---------- biblioteca ---------- */
+function card(p){
+  const c=compute(p);
+  return`<div class="exam"><div class="th">${p.thumb?`<img src="${p.thumb}">`:'<div class="noimg">sem PDF</div>'}
+  <div><div class="en">${esc(p.nome)}</div><div class="chips"><span class="chip">${p.total} questões</span>
+  <span class="chip cg">${c.ok.length} acertos</span><span class="chip cr">${c.no.length} erros</span>
+  ${c.nula.length?`<span class="chip cb">${c.nula.length} nula(s)</span>`:''}<span class="chip cy">${c.rev.length} rever</span></div></div></div>
+  <div class="row">${p.hasPdf?`<button class="btn btn-primary grow" onclick="nav('#/ler/${p.id}')">Abrir PDF</button>`
+  :`<label class="btn btn-primary grow">Anexar PDF<input type="file" accept="application/pdf" hidden data-att="${p.id}"></label>`}
+  <button class="btn btn-outline" onclick="nav('#/res/${p.id}')">Resultado</button></div>
+  <div class="row"><button class="btn btn-outline grow" onclick="nav('#/gab/${p.id}')">Gabarito</button>
+  <button class="btn btn-danger" onclick="delProva('${p.id}')">Excluir</button></div></div>`;
+}
+function library(){
+  app.innerHTML=`<div class="wrap"><div class="top"><div><h1>Gabarito Deck</h1><p class="sub">Suas provas em PDF, com gabarito e resultado</p></div></div>
+  <section class="card stack"><div class="row"><label class="btn btn-primary grow">📥 Importar PDF<input type="file" id="fpdf" accept="application/pdf" hidden></label>
+  <button class="btn btn-dark" onclick="nav('#/gab/new')">Alimentar gabarito</button></div>
+  <div class="grid">${provas.map(card).join('')||'<div class="empty">Nenhuma prova ainda. Toque em Importar PDF.</div>'}</div></section></div>`;
+  $('#fpdf').onchange=e=>importPdf(e.target.files[0]);
+}
+app.addEventListener('change',e=>{if(e.target.dataset&&e.target.dataset.att)importPdf(e.target.files[0],e.target.dataset.att)});
+async function delProva(id){
+  if(!confirm('Excluir esta prova, o PDF e as anotações?'))return;
+  provas=provas.filter(p=>p.id!==id);await save();await pdfDel(id);await kvSet('str:'+id,{});library();
+}
+async function importPdf(f,attId){
+  if(!f)return;
+  try{
+    const buf=await f.arrayBuffer();
+    const doc=await pdfjsLib.getDocument({data:new Uint8Array(buf.slice(0))}).promise;
+    const pg=await doc.getPage(1),v0=pg.getViewport({scale:1}),vp=pg.getViewport({scale:160/v0.width});
+    const c=document.createElement('canvas');c.width=vp.width;c.height=vp.height;
+    await pg.render({canvasContext:c.getContext('2d'),viewport:vp}).promise;
+    let p=attId&&getP(attId);
+    if(!p){p={id:uid(),nome:f.name.replace(/\.pdf$/i,''),total:0,alts:['A','B','C','D','E'],gab:{},resp:{},rev:{},criado:new Date().toISOString()};provas.unshift(p)}
+    p.hasPdf=true;p.thumb=c.toDataURL('image/jpeg',.6);
+    await pdfSet(p.id,buf);await save();
+    nav(attId?'#/':'#/gab/'+p.id);
+  }catch(e){alert('Não foi possível abrir este PDF.')}
+}
+
+/* ---------- alimentar gabarito ---------- */
+function gabScreen(id){
+  const p=getP(id),ini=p?(p.total&&Object.keys(p.gab).length?exportCode(p):`PROVA|${p.nome}|60|`):'';
+  app.innerHTML=`<div class="wrap"><div class="top"><div><h1>Alimentar gabarito</h1><p class="sub">${p?esc(p.nome):'Nova prova'}</p></div></div>
+  <section class="card stack"><div class="ex">PROVA|NOME DA PROVA|TOTAL|GABARITO</div>
+  <p class="tiny" style="margin:0">Use <b>*</b> no lugar da letra para marcar questão <b>nula (anulada)</b>. Máximo de 60 questões. Exemplo:</p>
+  <div class="ex">PROVA|URCA 2026.1|10|ABCDE*ABCD</div>
+  <textarea id="cod" placeholder="Cole o gabarito aqui...">${esc(ini)}</textarea>
+  <div class="row"><button class="btn btn-primary grow" onclick="saveGab('${id}')">Carregar gabarito</button><button class="btn btn-outline" onclick="history.back()">Voltar</button></div>
+  <p class="tiny" style="margin:0">Também aceita uma questão por linha: 1-A, 2-C, 3-*…</p></section></div>`;
+}
+async function saveGab(id){
+  try{
+    const g=parseCodigo($('#cod').value);let p=getP(id);
+    if(!p){p={id:uid(),resp:{},rev:{},criado:new Date().toISOString()};provas.unshift(p)}
+    Object.assign(p,{nome:g.nome,total:g.total,alts:g.alts,gab:g.gab});
+    await save();nav(p.hasPdf?'#/ler/'+p.id:'#/');
+  }catch(e){alert(e.message||'Não foi possível carregar o gabarito.')}
+}
+
+/* ---------- leitor de PDF ---------- */
+const COR_PEN=['#dc2626','#f97316','#16a34a','#2563eb','#7c3aed','#0f172a','#ec4899','#ffffff'];
+const COR_HL=['#fde047','#86efac','#f9a8d4','#fdba74','#67e8f9','#c4b5fd'];
+const T={tool:'hand',pen:{c:'#dc2626',s:3},hl:{c:'#fde047',s:16},er:18};
+async function reader(id){
+  const p=getP(id);if(!p){nav('#/');return}
+  const buf=await pdfGet(id);
+  if(!buf){app.innerHTML=`<div class="wrap"><div class="empty">Este PDF não está salvo no aparelho.</div><button class="btn btn-primary" onclick="nav('#/')">Voltar</button></div>`;return}
+  const pdf=await pdfjsLib.getDocument({data:new Uint8Array(buf.slice(0))}).promise;
+  const vs=[];for(let i=1;i<=pdf.numPages;i++)vs.push((await pdf.getPage(i)).getViewport({scale:1}));
+  R={id,p,pdf,vs,zoom:1,q:p.cur||1,str:(await kvGet('str:'+id))||{},alive:1,done:{},tasks:{}};
+  if(R.q>Math.max(p.total,1))R.q=1;
+  app.innerHTML=`<div class="rd"><div class="rhead"><button class="ib" onclick="history.back()">←</button><div class="rt">${esc(p.nome)}</div>
+  <span id="pgi" class="tiny"></span><button class="ib" onclick="zoomBy(-.2)">−</button><button class="ib" onclick="zoomBy(.2)">+</button>
+  <button class="ib" onclick="togglePaper()">🎨</button><button class="ib" onclick="nav('#/res/${id}')">📊</button></div><div id="sc"><div id="pages"></div></div><div class="bar" id="bar"></div></div>`;
+  $('#sc').addEventListener('pointerdown',closePop);
+  $('#sc').addEventListener('scroll',()=>{if(R&&!R.raf)R.raf=requestAnimationFrame(()=>{if(!R)return;R.raf=0;pageInd()})});
+  $('#sc').classList.toggle('mag',localStorage.getItem('gd-paper')==='mag');
+  buildPages();renderBar();setTool(T.tool);
+}
+function togglePaper(){
+  const m=localStorage.getItem('gd-paper')==='mag'?'branco':'mag';
+  localStorage.setItem('gd-paper',m);$('#sc').classList.toggle('mag',m==='mag');
+}
+function closeReader(){
+  if(!R)return;R.alive=0;if(R.io)R.io.disconnect();
+  clearTimeout(R.st);kvSet('str:'+R.id,R.str);save();R=null;
+}
+function buildPages(){
+  const sc=$('#sc'),pages=$('#pages');pages.innerHTML='';R.done={};
+  if(R.io)R.io.disconnect();
+  R.io=new IntersectionObserver(es=>es.forEach(e=>{const n=+e.target.dataset.n;e.isIntersecting?drawPage(n):freePage(n)}),{root:sc,rootMargin:'1500px 0px'});
+  R.base=Math.min(sc.clientWidth-90,1000);R.W=R.base*R.zoom;
+  R.vs.forEach((v,i)=>{
+    const d=document.createElement('div');d.className='pg';d.dataset.n=i+1;
+    d.style.width=R.W+'px';d.style.height=R.W*v.height/v.width+'px';
+    d.innerHTML='<canvas class="pc"></canvas><canvas class="ov"></canvas>';
+    pages.append(d);bindDraw(d,i+1);R.io.observe(d);
+  });
+  pageInd();
+}
+const pageEl=n=>$(`.pg[data-n="${n}"]`);
+async function drawPage(n){
+  if(!R||R.done[n])return;R.done[n]=1;const r0=R;
+  const page=await R.pdf.getPage(n);if(R!==r0||!R.done[n])return;
+  const d=pageEl(n),dpr=Math.min(devicePixelRatio||1,2),vp=page.getViewport({scale:R.W/page.getViewport({scale:1}).width});
+  const c=d.querySelector('.pc');c.width=vp.width*dpr;c.height=vp.height*dpr;c.style.width=vp.width+'px';c.style.height=vp.height+'px';
+  const t=page.render({canvasContext:c.getContext('2d'),viewport:vp,transform:[dpr,0,0,dpr,0,0]});
+  R.tasks[n]=t;t.promise.catch(()=>{});
+  const o=d.querySelector('.ov');o.width=vp.width*dpr;o.height=vp.height*dpr;o.style.width=vp.width+'px';o.style.height=vp.height+'px';
+  paint(n);
+}
+function freePage(n){
+  if(!R||!R.done[n])return;R.done[n]=0;if(R.tasks[n])R.tasks[n].cancel();
+  const d=pageEl(n);if(!d)return;d.querySelectorAll('canvas').forEach(c=>{c.width=0;c.height=0});
+}
+function paint(n,live){
+  const o=pageEl(n).querySelector('.ov'),x=o.getContext('2d'),W=o.width;
+  x.clearRect(0,0,o.width,o.height);x.lineCap=x.lineJoin='round';
+  [...(R.str[n]||[]),...(live?[live]:[])].forEach(s=>{
+    x.beginPath();x.strokeStyle=s.c;x.globalAlpha=s.h?.35:1;x.lineWidth=s.w*W;
+    s.p.forEach((q,i)=>i?x.lineTo(q[0]*W,q[1]*W):x.moveTo(q[0]*W,q[1]*W));
+    if(s.p.length===1)x.lineTo(s.p[0][0]*W+.1,s.p[0][1]*W);
+    x.stroke();
+  });
+  x.globalAlpha=1;
+}
+const segd=(a,b,p)=>{const dx=b[0]-a[0],dy=b[1]-a[1],l=dx*dx+dy*dy;let t=l?((p[0]-a[0])*dx+(p[1]-a[1])*dy)/l:0;t=Math.max(0,Math.min(1,t));return Math.hypot(a[0]+t*dx-p[0],a[1]+t*dy-p[1])};
+function erase(n,p){
+  const L=R.str[n]||[],r=T.er/R.base;
+  const k=L.filter(s=>!s.p.some((q,i)=>(i?segd(s.p[i-1],q,p):Math.hypot(q[0]-p[0],q[1]-p[1]))<r+s.w/2));
+  if(k.length!==L.length){R.str[n]=k;paint(n);saveStr()}
+}
+function saveStr(){clearTimeout(R.st);R.st=setTimeout(()=>R&&kvSet('str:'+R.id,R.str),400)}
+function bindDraw(d,n){
+  const o=d.querySelector('.ov');let cur=null,er=false;
+  const pt=e=>{const r=o.getBoundingClientRect();return[(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.width]};
+  o.onpointerdown=e=>{
+    if(T.tool==='hand')return;o.setPointerCapture(e.pointerId);closePop();const p=pt(e);
+    if(T.tool==='er'){er=true;erase(n,p)}else{const k=T[T.tool];cur={c:k.c,w:k.s/R.base,h:T.tool==='hl',p:[p]};paint(n,cur)}
+    e.preventDefault();
+  };
+  o.onpointermove=e=>{const p=pt(e);if(er)erase(n,p);else if(cur){cur.p.push(p);paint(n,cur)}};
+  o.onpointerup=o.onpointercancel=()=>{if(cur){(R.str[n]=R.str[n]||[]).push(cur);cur=null;paint(n);saveStr()}er=false};
+}
+function pageInd(){
+  const sc=$('#sc');if(!sc||!R)return;const mid=sc.scrollTop+sc.clientHeight/3;let cur=1;
+  document.querySelectorAll('.pg').forEach(d=>{if(d.offsetTop<=mid)cur=+d.dataset.n});
+  $('#pgi').textContent=`${cur}/${R.vs.length}`;
+}
+function zoomBy(d){
+  const sc=$('#sc'),r=sc.scrollTop/(sc.scrollHeight||1);
+  R.zoom=Math.min(2.6,Math.max(.6,+(R.zoom+d).toFixed(2)));buildPages();sc.scrollTop=r*sc.scrollHeight;
+}
+function setTool(t,toggle){
+  T.tool=t;$('#sc').classList.toggle('draw',t!=='hand');
+  if(toggle)popFor(t);else closePop();renderBar();
+}
+function renderBar(){
+  const p=R.p,q=R.q,g=p.gab[q],nula=g==='*',has=p.total>0,r=p.resp[q];
+  let h='';
+  if(has){
+    h+=`<button class="star ${p.rev[q]?'on':''}" onclick="toggleRev()">${p.rev[q]?'★':'☆'}</button>
+    <button class="ar" onclick="goQ(-1)">▲</button><button class="qn ${nula?'nula':''}" onclick="picker()">${q}${nula?'*':''}</button><button class="ar" onclick="goQ(1)">▼</button>`;
+    p.alts.forEach(a=>{
+      let c='al';if(r===a){c+=nula||!g?' sel':(a===g?' ok':' no')}else if(r&&g&&g!=='*'&&a===g&&r!==g)c+=' hint';
+      h+=`<button class="${c}" onclick="answer('${a}')">${a}</button>`;
+    });
+  }else h+=`<button class="al" style="width:54px;font-size:.7rem" onclick="nav('#/gab/${p.id}')">Sem gabarito</button>`;
+  h+=`<div class="sp"></div>
+  <button class="tb ${T.tool==='hand'?'on':''}" onclick="setTool('hand')">✋</button>
+  <button class="tb ${T.tool==='pen'?'on':''}" style="--c:${T.pen.c};color:${T.pen.c==='#ffffff'?'#000':'#fff'}" onclick="setTool('pen',1)">✎</button>
+  <button class="tb ${T.tool==='hl'?'on':''}" style="--c:${T.hl.c};color:#000" onclick="setTool('hl',1)">▬</button>
+  <button class="tb" onclick="popFor('size')"><span style="width:${Math.min(26,6+T[T.tool==='hl'?'hl':'pen'].s)}px;height:${Math.min(26,6+T[T.tool==='hl'?'hl':'pen'].s)}px;border-radius:50%;background:#fff"></span></button>
+  <button class="tb ${T.tool==='er'?'on':''}" onclick="setTool('er',1)">⌫</button>`;
+  $('#bar').innerHTML=h;
+}
+function answer(a){
+  const p=R.p,q=R.q;if(p.resp[q]===a)delete p.resp[q];else p.resp[q]=a;save();renderBar();
+}
+function toggleRev(){const p=R.p,q=R.q;if(p.rev[q])delete p.rev[q];else p.rev[q]=1;save();renderBar()}
+function goQ(d){const n=R.q+d;if(n<1||n>R.p.total)return;R.q=R.p.cur=n;renderBar()}
+function picker(){
+  const p=R.p;let t='';
+  for(let i=1;i<=p.total;i++)t+=`<button class="t t-${status(p,i)}" onclick="pick(${i})">${i}${p.rev[i]?'<i>★</i>':''}</button>`;
+  const s=document.createElement('div');s.className='sheet';s.id='sheet';s.onclick=e=>{if(e.target===s)s.remove()};
+  s.innerHTML=`<div class="card"><b>Ir para a questão</b><div class="qg" style="margin-top:12px;grid-template-columns:repeat(5,1fr)">${t}</div></div>`;
+  document.body.append(s);
+}
+function pick(i){R.q=R.p.cur=i;$('#sheet').remove();renderBar()}
+function closePop(){const e=$('#pop');if(e)e.remove()}
+function popFor(k){
+  closePop();const bar=$('#bar').getBoundingClientRect();
+  const el=document.createElement('div');el.className='pop';el.id='pop';el.style.top=Math.max(60,bar.bottom-190)+'px';
+  const sw=(list,cur,key)=>list.map(c=>`<button class="sw ${c===cur?'on':''}" style="background:${c}" onclick="setCor('${key}','${c}')"></button>`).join('');
+  const sl=(v,key)=>`<input type="range" min="1" max="40" value="${v}" oninput="setSize('${key}',this.value)">`;
+  if(k==='pen')el.innerHTML=sw(COR_PEN,T.pen.c,'pen');
+  else if(k==='hl')el.innerHTML=sw(COR_HL,T.hl.c,'hl');
+  else if(k==='er')el.innerHTML='<div class="tiny" style="width:100%;color:#cbd5e1">Tamanho da borracha</div>'+sl(T.er,'er');
+  else{const key=T.tool==='hl'?'hl':'pen';el.innerHTML=`<div class="tiny" style="width:100%;color:#cbd5e1">Tamanho do ${key==='hl'?'marcador':'pincel'}</div>`+sl(T[key].s,key)}
+  document.body.append(el);
+}
+function setCor(k,c){T[k].c=c;closePop();renderBar()}
+function setSize(k,v){if(k==='er')T.er=+v;else T[k].s=+v}
+
+/* ---------- resultado ---------- */
+function result(id){
+  const p=getP(id);if(!p){nav('#/');return}
+  const c=compute(p),n=p.total;
+  if(!n){app.innerHTML=`<div class="wrap"><div class="empty">Esta prova ainda não tem gabarito.</div><button class="btn btn-primary" onclick="nav('#/gab/${id}')">Alimentar gabarito</button></div>`;return}
+  const pc=x=>x/n*100,a=pc(c.ok.length),b=a+pc(c.no.length),d=b+pc(c.nula.length);
+  const donut=`conic-gradient(#16a34a 0 ${a}%,#dc2626 ${a}% ${b}%,#2563eb ${b}% ${d}%,#e2e8f0 ${d}% 100%)`;
+  const match=i=>({todas:1,certas:status(p,i)==='ok',erradas:status(p,i)==='no',nulas:status(p,i)==='nula',rever:p.rev[i],pendentes:status(p,i)==='pend'})[filtro];
+  let blocks='',grid='';
+  for(let s=1;s<=n;s+=15){
+    const e=Math.min(s+14,n);let good=0,tiles='';
+    for(let i=s;i<=e;i++){const st=status(p,i);if(st==='ok'||st==='nula')good++;
+      if(match(i))tiles+=`<button class="t t-${st}" onclick="openQ('${id}',${i})">${i}${p.rev[i]?'<i>★</i>':''}</button>`}
+    const pr=Math.round(good/(e-s+1)*100);
+    blocks+=`<div class="br"><span>Q${s}-${e}</span><div class="bt"><div class="bf" style="width:${pr}%"></div></div><span>${pr}%</span></div>`;
+    grid+=`<div class="mx"><div class="ml">${s} - ${e}</div><div class="qg">${tiles||'<span class="tiny">Nenhuma</span>'}</div></div>`;
+  }
+  const tab=(k,l)=>`<button class="tab ${filtro===k?'on':''}" onclick="filtro='${k}';result('${id}')">${l}</button>`;
+  app.innerHTML=`<div class="wrap"><div class="top"><div><h1>${esc(p.nome)}</h1><p class="sub">${n} questões</p></div><button class="ib" onclick="nav('#/')">✕</button></div>
+  <section class="card stack"><div class="stats">
+  <div class="stat"><div class="sv">${c.ok.length}</div><div class="sl">Acertadas</div></div>
+  <div class="stat"><div class="sv">${c.no.length}</div><div class="sl">Erradas</div></div>
+  <div class="stat"><div class="sv">${c.nula.length}</div><div class="sl">Anuladas</div></div>
+  <div class="stat"><div class="sv">${c.pct}%</div><div class="sl">Desempenho</div></div></div>
+  <div class="card"><b>Desempenho geral</b><div class="perf" style="margin-top:12px"><div class="donut" style="background:${donut}"><div>${c.pct}%<small>aproveitamento</small></div></div>
+  <div class="lg"><span><i class="dt" style="background:#16a34a"></i>Certas · ${c.ok.length}</span><span><i class="dt" style="background:#dc2626"></i>Erradas · ${c.no.length}</span>
+  <span><i class="dt" style="background:#2563eb"></i>Anuladas · ${c.nula.length}</span><span><i class="dt" style="background:#cbd5e1"></i>Pendentes · ${c.pend.length}</span></div></div>
+  <div style="margin-top:16px"><b>Desempenho por matéria</b> <span class="tiny">(blocos de 15 questões)</span>${blocks}</div></div>
+  <div class="tabs">${tab('todas','Todas')}${tab('certas','Acertadas')}${tab('erradas','Erradas')}${tab('nulas','Anuladas')}${tab('rever','Rever')}${tab('pendentes','Pendentes')}</div>
+  <div>${grid}</div>
+  <div class="row">${p.hasPdf?`<button class="btn btn-primary grow" onclick="nav('#/ler/${id}')">Voltar ao PDF</button>`:''}
+  <button class="btn btn-outline grow" onclick="nav('#/gab/${id}')">Editar gabarito</button>
+  <button class="btn btn-danger" onclick="zerar('${id}')">Zerar respostas</button></div></section></div>`;
+}
+function openQ(id,i){const p=getP(id);p.cur=i;save();p.hasPdf?nav('#/ler/'+id):0}
+async function zerar(id){if(!confirm('Apagar todas as respostas e marcações desta prova?'))return;const p=getP(id);p.resp={};p.rev={};await save();result(id)}
+
+/* ---------- início ---------- */
+(async()=>{
+  let d=await kvGet('provas');
+  if(!d){try{const raw=localStorage.getItem('gabarito-deck-offline-v1')||localStorage.getItem('provas');d=raw?JSON.parse(raw).map(migrate):[]}catch(e){d=[]}}
+  provas=d;await save();route();
+})();
+</script>
+</body>
+</html>
